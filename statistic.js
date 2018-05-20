@@ -55,8 +55,6 @@
     try{
         var c =  new _c;
         var a = [];
-        // datetime
-        a.push('__t='+new Date().toLocaleString());
         //navigator referer
         a.push('__r='+ f(d.referrer));
         //url

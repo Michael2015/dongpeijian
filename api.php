@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("Asia/Shanghai"); 
 include "./Util/mongo.php";
 $db = new mongo();
 $host =  'localhost';
@@ -56,26 +57,31 @@ if($result3)
     $a_week_avg_pv =  round(array_sum($temp_arr)/count($temp_arr),2);
 }
 //同一用户在相邻两次打开页面的间隔时间，间隔为0-24h，1天，2天…如此类推
-$db->option = ['sort' => [
-    '__t' => -1
-]];
-$result4 = $db->where($where)->select();
-print_r($result4);
+$where4 = ['__h'=>$host];
+$db->option = ['sort' => [ '__t' => -1],'projection'=>['__t'=>1,'uuuuid'=>1]];
+$result4 = $db->where($where4)->select();
+if($result4)
+{
+    $all_client_log = [];
+    $all_client_time_diff = [];
+    foreach($result4 as $key=>$value)
+    {
+        if(!isset($value['uuuuid']) || (isset($all_client_log[$value['uuuuid']]) && count($all_client_log[$value['uuuuid']]) == 2))
+        {
+           continue;
+        }
+        if(isset($all_client_log[$value['uuuuid']]))
+        {
+              $time_stamp1 = strtotime(current($all_client_log[$value['uuuuid']]));
+              $time_stamp2 = strtotime($value['__t']);
+              $all_client_time_diff[$value['uuuuid']] = $time_stamp1 - $time_stamp2;
+        }
+        $all_client_log[$value['uuuuid']][] = $value['__t'];
+    }
+    //$new_all_client_log = array_filter($all_client_log,function($v){return count($v) == 2 ? 1 : 0;});
+    //同一用户在相邻两次打开页面的间隔时间，间隔为0-24h，1天，2天…如此类推(平均值，多少小时)
+   print_r(round(array_sum($all_client_time_diff) / count($all_client_time_diff) / 3600,2)); 
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//print_r($uid_arr);
 }
 ?>

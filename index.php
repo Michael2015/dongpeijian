@@ -67,7 +67,7 @@ function get_curl($url,$data)
 	<title>汽修大师</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
-	<script src="./statistic.js"></script>
+	<script src="./statistic.min.js"></script>
 </head>
 <style>
 h1{font-size: 1.5em;margin-top: 2em;width: 90%;margin-left: 5%;}
