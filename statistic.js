@@ -18,7 +18,7 @@
         //only id
         this.f = ['u_id','s'];
         //special id
-        this.id =  'uuuuid';
+        this.id =  'user_id';
         // url hash
         this.hash  = '';
     }
@@ -33,9 +33,9 @@
         },
         gC : function()
         {
-            this.uuuuid = d.cookie.match(/uuuuid=(\S+);?/g) ? d.cookie.match(/uuuuid=(\S+);?/g)[0].replace(';','') : '';
+            this.user_id = d.cookie.match(/user_id=(\S+);?/g) ? d.cookie.match(/user_id=(\S+);?/g)[0].replace(';','') : '';
             this.qc = d.cookie.match(/query=(.+);?/g) ? d.cookie.match(/query=(.+);?/g)[0].replace(';','').replace('query=','') : '';
-            this.ck = this.uuuuid+'%26'+this.qc;
+            this.ck = this.user_id+'%26'+this.qc;
         },
         sC : function(l)
         {
@@ -69,7 +69,7 @@
             if(r)
             {
                 var m = r.match(/http:\/\/([^\/]+)/i);
-                if(m && m[1] !== this.h && q.match(/uuuuid=\S+/))
+                if(m && m[1] !== this.h && q.match(/user_id=\S+/))
                 {
                    d.cookie = 'hash='+Math.floor(Math.random()*100000000);
                 }
