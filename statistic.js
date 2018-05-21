@@ -3,7 +3,7 @@
 //date : 2018-05-16
 !(function(){ 
     var w =  window,d = document,f = encodeURIComponent;
-    var _u = 'http://localhost/dongpeijian/log.php?';
+    var _u = 'https://analytics.goloiov.cn/log.php?';
     function _(a)
     {
         (new Image).src = _u+a.join('&',a); 
@@ -11,23 +11,31 @@
     function _c()
     {
         this.l = w.location.href;
+        this.r = w.location.referrer;
+        this.q = w.location.search;
+        this.h = w.location.host;
         this.ck = '';
         //only id
         this.f = ['u_id','s'];
         //special id
         this.id =  'uuuuid';
+        // url hash
+        this.hash  = '';
     }
     _c.prototype = {
         U : function()
         {
             return this.sC(this.l),this.gC(),this.ck;
         },
+        H :function()
+        {
+            return this.sH(this.r,this.q),this.gH(),this.hash;
+        },
         gC : function()
         {
-            var uuuuid = 
             this.uuuuid = d.cookie.match(/uuuuid=(\S+);?/g) ? d.cookie.match(/uuuuid=(\S+);?/g)[0].replace(';','') : '';
-            this.q = d.cookie.match(/query=(.+);?/g) ? d.cookie.match(/query=(.+);?/g)[0].replace(';','').replace('query=','') : '';
-            this.ck = this.uuuuid+'%26'+this.q;
+            this.qc = d.cookie.match(/query=(.+);?/g) ? d.cookie.match(/query=(.+);?/g)[0].replace(';','').replace('query=','') : '';
+            this.ck = this.uuuuid+'%26'+this.qc;
         },
         sC : function(l)
         {
@@ -50,6 +58,22 @@
                     d.cookie = "query="+f(b.join('&'));
                 }
             }
+        },
+
+        gH :function()
+        {
+             this.hash = d.cookie.match(/hash=(\S+);?/g) ? d.cookie.match(/hash=(\S+);?/g)[0].replace(';','').replace('hash=','') : '';
+        },
+        sH : function(r,q)
+        {
+            if(r)
+            {
+                var m = r.match(/http:\/\/([^\/]+)/i);
+                if(m && m[1] !== this.h && q.match(/uuuuid=\S+/))
+                {
+                   d.cookie = 'hash='+Math.floor(Math.random()*100000000);
+                }
+            }
         }
     }
     try{
@@ -60,13 +84,16 @@
         //url
         a.push('__l='+f(w.location.href));
         //userAgent
-        a.push('__ua='+f(w.navigator.userAgent));
+        a.push('__ua='+f(w.navigator.userAgent.toLowerCase));
         //rand numbers 
         a.push('__r='+Math.floor(2147483648 * Math.random())); 
         //cookie datas
         a.push('__h='+f(w.location.host));
         //host
         a.push('__c='+f(c.U()));
+        //hash 
+        a.push('__hash='+f(c.H()));
+        c.H();
         _(a);
     }catch(err){
         console.log(err);

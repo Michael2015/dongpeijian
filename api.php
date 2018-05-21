@@ -2,8 +2,8 @@
 date_default_timezone_set("Asia/Shanghai"); 
 include "./Util/mongo.php";
 $db = new mongo();
-$host =  'localhost';
-
+$s_host =  'analytics.goloiov.cn';
+$d_host ='golo.beimai.net';
 
 if($_SERVER['REQUEST_METHOD'] == 'GET')
 {
@@ -14,7 +14,7 @@ $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
 
 //------------last day all people
 $last_day = strtotime('-1 day');
-$where = ['__t'=>['$lt'=>date('Y-m-d 23:59:59',$last_day),'$gt'=>date('Y-m-d 00:00:00',$last_day)],'__h'=>$host];
+$where = ['__t'=>['$lt'=>date('Y-m-d 23:59:59',$last_day),'$gt'=>date('Y-m-d 00:00:00',$last_day)],'__h'=>$s_host];
 $result = $db->where($where)->select();
 if($result)
 {
@@ -30,7 +30,7 @@ if($result)
     $old_client_sum = 0;
     foreach(array_unique($uid_arr) as $uid)
     {
-        $where2 = ['__t'=>['$lt'=>date('Y-m-d 00:00:00',$last_day)],'uuuuid'=>$uid,'__h'=>$host];
+        $where2 = ['__t'=>['$lt'=>date('Y-m-d 00:00:00',$last_day)],'uuuuid'=>$uid,'__h'=>$s_host];
         $is_exist = $db->where($where2)->find();
         if($is_exist)
         {
@@ -49,7 +49,7 @@ if($result)
 
  //一周内，平均同一用户打开页面的次数
  $a_week = strtotime('-1 week');
- $where3 = ['__t'=>['$gt'=>date('Y-m-d 00:00:00',$a_week)],'__h'=>$host];
+ $where3 = ['__t'=>['$gt'=>date('Y-m-d 00:00:00',$a_week)],'__h'=>$s_host];
  $result3 = $db->where($where3)->select(); 
 if($result3)
 {
@@ -57,7 +57,7 @@ if($result3)
     $a_week_avg_pv =  round(array_sum($temp_arr)/count($temp_arr),2);
 }
 //同一用户在相邻两次打开页面的间隔时间，间隔为0-24h，1天，2天…如此类推
-$where4 = ['__h'=>$host];
+$where4 = ['__h'=>$d_host];
 $db->option = ['sort' => [ '__t' => -1],'projection'=>['__t'=>1,'uuuuid'=>1]];
 $result4 = $db->where($where4)->select();
 if($result4)
@@ -80,8 +80,35 @@ if($result4)
     }
     //$new_all_client_log = array_filter($all_client_log,function($v){return count($v) == 2 ? 1 : 0;});
     //同一用户在相邻两次打开页面的间隔时间，间隔为0-24h，1天，2天…如此类推(平均值，多少小时)
-   print_r(round(array_sum($all_client_time_diff) / count($all_client_time_diff) / 3600,2)); 
+    $twice_open_time = round(array_sum($all_client_time_diff) / count($all_client_time_diff) / 3600,2); 
 }
+
+
+$where5 = ['__t'=>['$lt'=>date('Y-m-d 23:59:59',$last_day),'$gt'=>date('Y-m-d 00:00:00',$last_day)],'__h'=>$d_host];
+$db->option = ['projection'=>['__h'=>1,'uuuuid'=>1,'__hash'=>1]];
+$result5 = $db->where($where5)->select();
+if($result5)
+{
+    $every_access_count_arr = [];
+    foreach($result as $key=>$value)
+    {
+        if(!isset($value['__hash']))
+        {
+            continue; 
+        }
+        if(isset($every_access_count_arr[$value['uuuuid'].'_'.$value['__hash']]))
+        {
+            $every_access_count_arr[$value['uuuuid'].'_'.$value['__hash']] +=1;
+        }
+        else
+        {
+            $every_access_count_arr[$value['uuuuid'].'_'.$value['__hash']] = 1;
+        }
+    }
+}
+//同一用户在单次打开页面时，平均浏览的页面数
+print_r(round(array_sum($every_access_count_arr) / count($every_access_count_arr),2));
+
 
 }
 ?>
