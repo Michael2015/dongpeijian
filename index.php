@@ -58,7 +58,8 @@ function get_curl($url,$data)
 	<title>汽修大师</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
-	<script src="https://analytics.goloiov.cn/statistic.min.js?v=1.0.2"></script>
+	<script src="https://analytics.goloiov.cn/statistic.php?v=1.0.0"></script>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273597132'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273597132%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 </head>
 <style>
 h1{font-size: 1.5em;margin-top: 2em;width: 90%;margin-left: 5%;}
