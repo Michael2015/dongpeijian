@@ -1,8 +1,7 @@
 <?php
 include "./Util/Signature.php";
-include "./Util/mysql.php";
 define('COMMUNICATE_ID', 'b04de914268d6027');
-define('COMMUNICATE_KEY', '$db4a134e3907f5a3f36fe914de339be304');
+define('COMMUNICATE_KEY', '4a134e3907f5a3f36fe914de339be304');
 use Golo\Signature;
 //加密盐值
 $serect_id = 'sAH0Uy0uw31WTpCe';
@@ -35,15 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && $_GET['user
     //验证token,验证成功并跳转
 	if($token_data && $token_data['data'] === $token)
 	{
-		//print_r($request_param);
-        //登录
-		$DB = new mysql('localhost','test','root','root');
-		//插入访问日志
-        $is_success = $DB->query("INSERT INTO access_log(uid,access_datetime) VALUES(?,?)", array($user_id,date("Y-m-d H:i:s")));
-        if($is_success)
-        {
-           $jump_url = "https://golo.beimai.net/#/?user_id=".$user_id."&sign=".$sign_encrypt;
-        }
+        $jump_url = "https://golo.beimai.net/#/?user_id=".$user_id."&sign=".$sign_encrypt;
 	}
 }
 //请求token接口，获取token
@@ -67,7 +58,7 @@ function get_curl($url,$data)
 	<title>汽修大师</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
-	<script src="./statistic.min.js"></script>
+	<script src="https://analytics.goloiov.cn/statistic.min.js?v=1.0.2"></script>
 </head>
 <style>
 h1{font-size: 1.5em;margin-top: 2em;width: 90%;margin-left: 5%;}

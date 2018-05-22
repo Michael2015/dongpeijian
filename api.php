@@ -1,9 +1,9 @@
 <?php
 date_default_timezone_set("Asia/Shanghai"); 
 include "./Util/mongo.php";
-$db = new mongo();
-$s_host =  'analytics.goloiov.cn';
-$d_host ='golo.beimai.net';
+$db = new mg();
+$s_host =  'goloiov.cn';
+$d_host ='beimai.net';
 
 if($_SERVER['REQUEST_METHOD'] == 'GET')
 {

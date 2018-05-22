@@ -1,11 +1,11 @@
 <?php 
-class mongo{
+class mg{
     public $mongodb='';
     public $db='';
     public $table='access_log';
     public $filter=[];
     public $option=[];
-    public function __construct($config=['name'=>'dongpeijian','host'=>'127.0.0.1','port'=>27017]){
+    public function __construct($config=['name'=>'dongpeijian','host'=>'120.77.66.3','port'=>27017]){
         //实例化mongodb对象
         $this->mongodb = new \MongoDB\Driver\Manager("mongodb://".$config['host'].":".$config['port']);
         //表

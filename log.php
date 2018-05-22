@@ -2,7 +2,7 @@
 date_default_timezone_set("Asia/Shanghai"); 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 include "./Util/mongo.php";
-$db = new mongo();
+$db = new mg();
 $_GET['__t'] = date("Y-m-d H:i:s");
 unset($_GET['__r']);
 if(isset($_GET['__c']) && $_GET['__c'])

@@ -1,6 +1,5 @@
-//for short code ,lack readable,sorry
-//author :yangmingzhao
-//date : 2018-05-16
+<?php
+$js = <<<EOT
 !(function(){ 
     var w =  window,d = document,f = encodeURIComponent;
     var _u = 'https://analytics.goloiov.cn/log.php?';
@@ -36,7 +35,6 @@
             this.user_id = d.cookie.match(/user_id=(\S+);?/) ? d.cookie.match(/user_id=(\S+);?/)[0].replace(';','') : '';
             this.qc = d.cookie.match(/query=(\S*);?/) ? d.cookie.match(/query=(\S*);?/)[0].replace(';','').replace('query=','') : '';
             this.ck = this.user_id+'%26'+this.qc;
-            console.log(this.qc)
         },
         sC : function(l)
         {
@@ -102,3 +100,6 @@
         console.log(err);
     }
 }());
+EOT;
+echo $js;
+?>
