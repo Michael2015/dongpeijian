@@ -1,0 +1,11 @@
+﻿last_day_total => /日浏览用户数（去重）
+all_source => 进入方式（来源）
+open_page_total=>日浏览次数（不去重）
+old_client_sum=>日浏览老用户数 
+new_client_sum=>x日浏览新用户数
+a_week_avg_pv=>使用频率   
+twice_open_time=>使用间隔 
+everyone_read_page_count=>浏览页面 
+
+
+
