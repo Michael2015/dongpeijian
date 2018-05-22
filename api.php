@@ -9,9 +9,9 @@ $source_name = [10=>'启动页',2=>'首页banner','5'=>'首页模块'];
 if($_SERVER['REQUEST_METHOD'] == 'GET')
 {
 //开始日期
-$start_date = isset($_GET['start_date']) ? strtotime($_GET['start_date']) : strtotime('2018-05-21');
+$start_date = isset($_GET['start_date']) ? strtotime($_GET['start_date']) : strtotime('-1 day');
 //结束日期
-$end_date = isset($_GET['end_date']) ? strtotime($_GET['end_date']) : strtotime('2018-05-22');
+$end_date = isset($_GET['end_date']) ? strtotime($_GET['end_date']) : strtotime('-1 day');
 
 $return_data = [];
 while($start_date <= $end_date)
