@@ -128,6 +128,6 @@ $everyone_read_page_count;
 $return_data[date('Y-m-d',$start_date)]['everyone_read_page_count'] = $everyone_read_page_count;
 $start_date = strtotime('+1 day',$start_date);
 }
-print_r($return_data);
+echo json_encode($return_data);
 }
 ?>
