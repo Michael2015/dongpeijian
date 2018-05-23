@@ -4,7 +4,7 @@ include "./Util/mongo.php";
 $db = new mg();
 $s_host =  'goloiov.cn';
 $d_host ='beimai.net';
-$source_name = [10=>'启动页',2=>'首页banner','5'=>'首页模块'];
+$source_name = ['module'=>'首页模块'，'启动页'，'首页banner'];
 
 if($_SERVER['REQUEST_METHOD'] == 'GET')
 {
@@ -26,7 +26,7 @@ if($result)
     $last_day_total = count(array_unique($uid_arr));
     $return_data[date('Y-m-d',$start_date)]['last_day_total'] = $last_day_total;
     //---------进入方式
-    $all_source = array_count_values(array_column($result,'s'));
+    $all_source = array_count_values(array_column($result,'entry'));
     if($all_source)
     {
         $all_source = array_combine($source_name ,$all_source);
