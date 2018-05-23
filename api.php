@@ -17,7 +17,8 @@ $return_data = [];
 while($start_date <= $end_date)
 {
 //------------last day all people
-$where = ['__t'=>['$lt'=>date('Y-m-d 23:59:59',$end_date),'$gt'=>date('Y-m-d 00:00:00',$start_date)],'__h'=>$s_host];
+$where = ['__t'=>['$lt'=>date('Y-m-d 23:59:59',$start_date),'$gt'=>date('Y-m-d 00:00:00',$start_date)],'__h'=>$s_host];
+$db->option = [];
 $result = $db->where($where)->select();
 if($result)
 {
@@ -58,7 +59,7 @@ if($result)
  //every client avg time 
  //--------------------
  //一周内，平均同一用户打开页面的次数
- $where3 = ['__t'=>['$gt'=>date('Y-m-d 00:00:00',strtotime('-1 week',$start_date))],'__h'=>$s_host];
+ $where3 = ['__t'=>['$gt'=>date('Y-m-d 00:00:00',strtotime('-1 week',$start_date)),'$lt'=>date('Y-m-d 23:59:59',$start_date)],'__h'=>$s_host];
  $result3 = $db->where($where3)->select(); 
  $a_week_avg_pv = 0;
 if($result3)
@@ -68,7 +69,7 @@ if($result3)
 }
 $return_data[date('Y-m-d',$start_date)]['a_week_avg_pv'] = $a_week_avg_pv;
 //同一用户在相邻两次打开页面的间隔时间，间隔为0-24h，1天，2天…如此类推
-$where4 = ['__h'=>$d_host,'__t'=>['$lt'=>date('Y-m-d 00:00:00',$start_date)]];
+$where4 = ['__h'=>$s_host,'__t'=>['$lt'=>date('Y-m-d 00:00:00',$start_date)]];
 $db->option = ['sort' => [ '__t' => -1],'projection'=>['__t'=>1,'user_id'=>1]];
 $result4 = $db->where($where4)->select();
 $twice_open_time = 0;
@@ -94,7 +95,7 @@ if($result4)
     //同一用户在相邻两次打开页面的间隔时间，间隔为0-24h，1天，2天…如此类推(平均值，多少小时)
     $twice_open_time = round(array_sum($all_client_time_diff) / count($all_client_time_diff) / 3600,2); 
 }
-$return_data[date('Y-m-d',$start_date)]['twice_open_time'] = $twice_open_time;
+$return_data[date('Y-m-d',$start_date)]['twice_open_time'] = $twice_open_time.' (hr)';
 
 $where5 = ['__t'=>['$lt'=>date('Y-m-d 23:59:59',$start_date),'$gt'=>date('Y-m-d 00:00:00',$start_date)],'__h'=>$d_host];
 $db->option = ['projection'=>['__h'=>1,'user_id'=>1,'__hash'=>1]];
