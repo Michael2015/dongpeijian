@@ -4,7 +4,7 @@ include "./Util/mongo.php";
 $db = new mg();
 $s_host =  'goloiov.cn';
 $d_host ='beimai.net';
-$source_name = ['module'=>'首页模块'，'启动页'，'首页banner'];
+$source_name = ['module'=>'首页模块'];
 
 if($_SERVER['REQUEST_METHOD'] == 'GET')
 {
