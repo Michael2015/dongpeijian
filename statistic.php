@@ -10,8 +10,6 @@ $js = <<<EOT
     function _c()
     {
         this.l = w.location.href;
-        this.r = d.referrer;
-        this.q = w.location.search;
         this.h = w.location.host;
         this.ck = '';
         //only id
@@ -26,9 +24,9 @@ $js = <<<EOT
         {
             return this.sC(this.l),this.gC(),this.ck;
         },
-        H :function()
+        H :function(r,q)
         {
-            return this.sH(this.r,this.q),this.gH(),this.hash;
+            return this.sH(r,q),this.gH(),this.hash;
         },
         gC : function()
         {
@@ -70,7 +68,7 @@ $js = <<<EOT
             if(r)
             {
                 var m = r.match(/http:\/\/([^\/]+)/i);
-                if(m && m[1] !== this.h && q.match(/user_id=\S+/))
+                if(m && m[1] != this.h && q.match(/user_id=\S+/))
                 {
                    d.cookie = 'hash='+Math.floor(Math.random()*100000000);
                 }
@@ -93,7 +91,7 @@ $js = <<<EOT
         //host
         a.push('__c='+f(c.U()));
         //hash 
-        a.push('__hash='+f(c.H()));
+        a.push('__hash='+f(c.H(d.referrer,w.location.href)));
         //c.H();
         _(a);
     }catch(err){

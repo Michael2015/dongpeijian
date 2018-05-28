@@ -1,1 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+</head>
+<body>
 <script type="text/javascript" src="./statistic.php?v=1.0.0"></script>
+<button id="aaa">点击事件</button>
+<script type="text/javascript">
+	var btn = document.getElementById('aaa');
+	btn.onclick = function ()
+	{
+		var url=window.location.href;
+       var length =url.length;
+       newurl = url+"?bbb";
+       history.replaceState(null, "",newurl);
+       
+	}
+	window.onunload = function(){
+              document.write("历史列表中URL的数量: " + history.length);
+     }
+
+</script>
+</body>
+</html>
