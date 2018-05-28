@@ -1,9 +1,11 @@
 <?php
 date_default_timezone_set("Asia/Shanghai"); 
 include "./Util/mongo.php";
+include "./Util/redis.php";
 $db = new mg();
+$redis = new RS();
 $s_host =  'goloiov.cn';
-$d_host ='beimai.net';
+$d_host ='golo.beimai.net';
 $source_name = ['module'=>'首页模块'];
 
 if($_SERVER['REQUEST_METHOD'] == 'GET')
@@ -16,6 +18,13 @@ $end_date = isset($_GET['end_date']) ? strtotime($_GET['end_date']) : strtotime(
 $return_data = [];
 while($start_date <= $end_date)
 {
+    $s_date_format = date("Y-m-d",$start_date);
+    if($return = $redis->getValue($s_date_format))
+    {
+        $start_date = strtotime('+1 day',$start_date);
+        $return_data[$s_date_format] = json_decode($return);
+        continue;
+    }
 //------------last day all people
 $where = ['__t'=>['$lt'=>date('Y-m-d 23:59:59',$start_date),'$gt'=>date('Y-m-d 00:00:00',$start_date)],'__h'=>$s_host];
 $db->option = [];
@@ -127,8 +136,10 @@ if(!empty($every_access_count_arr))
 }
 $everyone_read_page_count;
 $return_data[date('Y-m-d',$start_date)]['everyone_read_page_count'] = $everyone_read_page_count;
+$redis->setValue($s_date_format,json_encode($return_data[$s_date_format]));
 $start_date = strtotime('+1 day',$start_date);
 }
+
 echo json_encode($return_data);
 }
 ?>

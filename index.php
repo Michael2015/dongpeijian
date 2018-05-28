@@ -31,6 +31,8 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && $_GET['user
 	$request_param['sign'] = $signature_obj->get_signature($request_param);
 	$json_data = get_curl('https://cnglinner.dbscar.com?',$request_param);
 	$token_data = json_decode($json_data,true);
+	  echo $jump_url = "https://golo.beimai.net/#/?user_id=".$user_id."&sign=".$sign_encrypt;
+        exit; 
     //验证token,验证成功并跳转
 	if($token_data && $token_data['data'] === $token)
 	{

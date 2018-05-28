@@ -10,7 +10,7 @@ $js = <<<EOT
     function _c()
     {
         this.l = w.location.href;
-        this.r = w.location.referrer;
+        this.r = d.referrer;
         this.q = w.location.search;
         this.h = w.location.host;
         this.ck = '';
@@ -94,7 +94,7 @@ $js = <<<EOT
         a.push('__c='+f(c.U()));
         //hash 
         a.push('__hash='+f(c.H()));
-        c.H();
+        //c.H();
         _(a);
     }catch(err){
         console.log(err);
