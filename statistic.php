@@ -1,4 +1,5 @@
 <?php
+$app_id = isset($_GET['app_id']) ? $_GET['app_id'] : '';
 $js = <<<EOT
 !(function(){ 
     var w =  window,d = document,f = encodeURIComponent;
@@ -78,6 +79,8 @@ $js = <<<EOT
     try{
         var c =  new _c;
         var a = [];
+        //app_id
+        a.push('__app_id='+{$app_id}); 
         //navigator referer
         a.push('__f='+ f(d.referrer));
         //url

@@ -1,17 +1,20 @@
 <?php 
 class mg{
     public $mongodb='';
-    public $db='';
-    public $table='access_log';
+    public $db='access_log';
     public $filter=[];
     public $option=[];
-    public function __construct($config=['name'=>'access_log','host'=>'120.77.66.3','port'=>27017]){
+    private $host = '120.77.66.3';
+    private $port = 27017;
+    private $prefix = 'access_log_';
+
+    public function __construct($table_id){
         //实例化mongodb对象
-        $this->mongodb = new \MongoDB\Driver\Manager("mongodb://".$config['host'].":".$config['port']);
+        $this->mongodb = new \MongoDB\Driver\Manager("mongodb://".$this->host.":".$this->port);
         //表
-        $this->table=$this->table;
+        $this->table = $this->prefix.$table_id;
         //库
-        $this->db = $config['name'];
+        $this->db = $this->db;
     }
     //返回原生mongodb对象
     public function mongodb(){

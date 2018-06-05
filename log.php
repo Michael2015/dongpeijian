@@ -1,8 +1,9 @@
 <?php
 date_default_timezone_set("Asia/Shanghai"); 
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+error_reporting(E_ALL);
 include "./Util/mongo.php";
-$db = new mg();
+$app_id = isset($_GET['__app_id']) ? $_GET['__app_id'] : '10001';
+$db = new mg($app_id);
 $_GET['__t'] = date("Y-m-d H:i:s");
 unset($_GET['__r']);
 if(isset($_GET['__c']) && $_GET['__c'])

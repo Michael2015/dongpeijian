@@ -139,7 +139,6 @@ $return_data[date('Y-m-d',$start_date)]['everyone_read_page_count'] = $everyone_
 $redis->setValue($s_date_format,json_encode($return_data[$s_date_format]));
 $start_date = strtotime('+1 day',$start_date);
 }
-
 echo json_encode($return_data);
 }
 ?>

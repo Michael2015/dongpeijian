@@ -31,8 +31,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['user_id']) && $_GET['user
 	$request_param['sign'] = $signature_obj->get_signature($request_param);
 	$json_data = get_curl('https://cnglinner.dbscar.com?',$request_param);
 	$token_data = json_decode($json_data,true);
-	  echo $jump_url = "https://golo.beimai.net/#/?user_id=".$user_id."&sign=".$sign_encrypt;
-        exit; 
     //验证token,验证成功并跳转
 	if($token_data && $token_data['data'] === $token)
 	{
@@ -60,7 +58,7 @@ function get_curl($url,$data)
 	<title>汽修大师</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
-	<script src="https://analytics.goloiov.cn/statistic.php?v=1.0.0"></script>
+	<script src="https://analytics.goloiov.cn/statistic.php?app_id=10001"></script>
 	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1273597132'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1273597132%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 </head>
 <style>
